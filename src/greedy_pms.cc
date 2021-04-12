@@ -2,10 +2,12 @@
 
 GreedyPms::~GreedyPms() {}
 
-std::vector<std::vector<int>> GreedyPms::Solve(
+std::vector<Machine> GreedyPms::Solve(
     size_t machines, const std::vector<std::vector<int>>& setup_times_,
     const std::vector<int>& process_times) {
-  std::vector<std::vector<int>> result;
+  std::vector<Machine> result;
+  std::vector<std::vector<bool>> executed(setup_times_.size(), std::vector<bool>(setup_times_.size(), false));
+  
 
   return result;
 }

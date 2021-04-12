@@ -9,9 +9,12 @@
 class GreedyPms : public StrategyPms {
  public:
   ~GreedyPms();
-  std::vector<std::vector<int>> Solve(
+  std::vector<Machine> Solve(
       size_t machines, const std::vector<std::vector<int>>& setup_times_,
-      const std::vector<int>& process_times);
+      const std::vector<int>& processes_times);
+
+ private:
+  std::vector<int> tcp_;
 };
 
 #endif

@@ -22,7 +22,7 @@ std::istream& operator>>(std::istream& is, ProblemPms& pms) {
 
   // Reservar memoria en función del tamaño del problema
   is >> aux >> process;
-  pms.process_times_.reserve(process);
+  pms.processes_times_.reserve(process);
   pms.setup_times_.reserve(process);
   is >> aux >> aux;
   pms.machines_ = stoi(aux);
@@ -30,7 +30,7 @@ std::istream& operator>>(std::istream& is, ProblemPms& pms) {
   // Tiempos de los procesos
   for (size_t i = 0; i < process; ++i) {
     is >> time;
-    pms.process_times_.push_back(time);
+    pms.processes_times_.push_back(time);
   }
 
   is >> aux;

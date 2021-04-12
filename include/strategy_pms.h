@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <machine.h>
 
 /**
  * @brief Clase interfaz para poder realizar el patrón estrategia dentro
@@ -20,9 +21,9 @@ class StrategyPms {
    * @return std::vector<std::vector<int>>  Vector resultante que indica que
    * procesos ejecutó cada máquina
    */
-  virtual std::vector<std::vector<int>> Solve(
+  virtual std::vector<Machine> Solve(
       size_t machines, const std::vector<std::vector<int>>& setup_times_,
-      const std::vector<int>& process_times) = 0;
+      const std::vector<int>& processes_times) = 0;
 };
 
 #endif
