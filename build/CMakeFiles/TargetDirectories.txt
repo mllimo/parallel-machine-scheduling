@@ -1,3 +1,0 @@
-/home/limo/Documentos/c++/daa-parallel-machine-scheduling/build/CMakeFiles/rebuild_cache.dir
-/home/limo/Documentos/c++/daa-parallel-machine-scheduling/build/CMakeFiles/edit_cache.dir
-/home/limo/Documentos/c++/daa-parallel-machine-scheduling/build/CMakeFiles/parallel-machine.dir
