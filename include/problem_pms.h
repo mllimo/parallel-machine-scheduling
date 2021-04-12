@@ -15,11 +15,11 @@
  */
 class ProblemPms {
  public:
- /**
-  * @brief Constructor por parámetros
-  * @param file_path Ruta del archivo que contendrá la información del problema
-  * @param strategy Estrategia que se utilizará para resolver el problema
-  */
+  /**
+   * @brief Constructor por parámetros
+   * @param file_path Ruta del archivo que contendrá la información del problema
+   * @param strategy Estrategia que se utilizará para resolver el problema
+   */
   ProblemPms(const std::string& file_path, StrategyPms* strategy);
   ~ProblemPms();
 

@@ -26,7 +26,7 @@ std::istream& operator>>(std::istream& is, ProblemPms& pms) {
   pms.setup_times_.reserve(process);
   is >> aux >> aux;
   pms.machines_ = stoi(aux);
-
+  is >> aux;
   // Tiempos de los procesos
   for (size_t i = 0; i < process; ++i) {
     is >> time;
@@ -38,7 +38,7 @@ std::istream& operator>>(std::istream& is, ProblemPms& pms) {
   for (size_t i = 0; i < process; ++i) {
     pms.setup_times_.emplace_back();
     pms.setup_times_[i].reserve(process);
-    for (size_t j = 0; i < process; j++) {
+    for (size_t j = 0; j < process; ++j) {
       is >> time;
       pms.setup_times_[i].push_back(time);
     }
