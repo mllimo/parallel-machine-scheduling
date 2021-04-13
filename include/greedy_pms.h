@@ -1,9 +1,7 @@
 #ifndef GREEDY_H
 #define GREEDY_H
 
-#include <machine.h>
 #include <strategy_pms.h>
-
 #include <algorithm>
 
 /**

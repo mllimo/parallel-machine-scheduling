@@ -8,6 +8,10 @@ int ProgramPms::Run() {
   ProblemPms problem(arg_[1], new GreedyPms());
   problem.Solve();
   std::cout << problem << std::endl;
+
+  ProblemPms problem2(arg_[1], new MyGreedyPms());
+  problem2.Solve();
+  std::cout << problem2 << std::endl;
   return 0;
 }
 

@@ -2,7 +2,6 @@
 #define STRATEGY_PMS_H
 
 #include <machine.h>
-
 #include <iostream>
 #include <limits>
 #include <vector>
