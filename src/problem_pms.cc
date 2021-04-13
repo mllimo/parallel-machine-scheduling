@@ -17,28 +17,28 @@ void ProblemPms::Solve() {
 
 std::istream& operator>>(std::istream& is, ProblemPms& pms) {
   std::string aux;
-  size_t process = 0;
+  size_t jobs = 0;
   size_t time;
 
   // Reservar memoria en función del tamaño del problema
-  is >> aux >> process;
-  pms.processes_times_.reserve(process);
-  pms.setup_times_.reserve(process);
+  is >> aux >> jobs;
+  pms.jobs_times_.reserve(jobs);
+  pms.setup_times_.reserve(jobs);
   is >> aux >> aux;
   pms.machines_ = stoi(aux);
   is >> aux;
   // Tiempos de los procesos
-  for (size_t i = 0; i < process; ++i) {
+  for (size_t i = 0; i < jobs; ++i) {
     is >> time;
-    pms.processes_times_.push_back(time);
+    pms.jobs_times_.push_back(time);
   }
 
   is >> aux;
   // [Proceso terminado][Nuevo proceso] -> Tiempo de setup
-  for (size_t i = 0; i < process; ++i) {
+  for (size_t i = 0; i < jobs; ++i) {
     pms.setup_times_.emplace_back();
-    pms.setup_times_[i].reserve(process);
-    for (size_t j = 0; j < process; ++j) {
+    pms.setup_times_[i].reserve(jobs);
+    for (size_t j = 0; j < jobs; ++j) {
       is >> time;
       pms.setup_times_[i].push_back(time);
     }

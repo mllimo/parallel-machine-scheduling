@@ -17,13 +17,13 @@ class StrategyPms {
    * @brief Interfaz de la función que podrá resolver el problema PMS
    * @param machines Número de máquinas
    * @param setup_times_ Tiempos de preparación
-   * @param process_times Tiempo de ejecución de cada proceso
+   * @param jobs_times Tiempo de ejecución de cada proceso
    * @return std::vector<std::vector<int>>  Vector resultante que indica que
    * procesos ejecutó cada máquina
    */
   virtual std::vector<Machine> Solve(
       size_t machines, const std::vector<std::vector<int>>& setup_times_,
-      const std::vector<int>& processes_times) = 0;
+      const std::vector<int>& jobs_times) = 0;
 };
 
 #endif

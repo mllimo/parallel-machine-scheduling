@@ -34,7 +34,7 @@ class ProblemPms {
  protected:
   size_t machines_;
   std::vector<std::vector<int>> setup_times_;
-  std::vector<int> processes_times_;
+  std::vector<int> jobs_times_;
   StrategyPms* algorithm_;
 };
 
