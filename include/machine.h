@@ -29,8 +29,8 @@ class Machine {
   bool Find(int jobs_index) const;
 
   /**
-   * @brief Devuelve el TCT de la máquina
-   * @return size_t TCT de la máquina
+   * @brief Devuelve el tiempo acumulado de la máquina
+   * @return size_t
    */
   size_t TotalTime() const;
 
@@ -51,6 +51,11 @@ class Machine {
    * @brief Devuelve el TCT actual de los procesos que han sido ejecutados en ella
    */
   size_t TCT() const;
+
+  /**
+   * @brief Devuelve el TCT suponiendo que se agrega el proceso dado
+   */
+  size_t TctWithJob(int job) const;
 
   friend std::ostream& operator<<(std::ostream& os, const Machine& machine);
 

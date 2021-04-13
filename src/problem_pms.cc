@@ -16,12 +16,13 @@ void ProblemPms::Solve() {
   size_t total_tcp = 0;
   
   for (auto& machine : result){
-    total_tcp += machine.TotalTime();
+    total_tcp += machine.TCT();
   }
 
   for (auto& machine : result){
     std::cout << machine << std::endl;
   }
+
   std::cout << "TCP TOTAL: " << total_tcp << std::endl;
 }
 
@@ -33,7 +34,7 @@ std::istream& operator>>(std::istream& is, ProblemPms& pms) {
   // Reservar memoria en función del tamaño del problema
   is >> aux >> jobs;
   pms.jobs_times_.reserve(jobs);
-  pms.setup_times_.reserve(jobs);
+  pms.setup_times_.reserve(jobs + 1);
   is >> aux >> aux;
   pms.machines_ = stoi(aux);
   is >> aux;
@@ -44,11 +45,11 @@ std::istream& operator>>(std::istream& is, ProblemPms& pms) {
   }
 
   is >> aux;
-  // [Proceso terminado][Nuevo proceso] -> Tiempo de setup
-  for (size_t i = 0; i < jobs; ++i) {
+  // [origen][destino] -> Tiempo de setup
+  for (size_t i = 0; i < jobs + 1; ++i) {
     pms.setup_times_.emplace_back();
-    pms.setup_times_[i].reserve(jobs);
-    for (size_t j = 0; j < jobs; ++j) {
+    pms.setup_times_[i].reserve(jobs + 1);
+    for (size_t j = 0; j < jobs + 1; ++j) {
       is >> time;
       pms.setup_times_[i].push_back(time);
     }

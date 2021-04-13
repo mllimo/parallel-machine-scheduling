@@ -13,11 +13,13 @@ Machine::Machine(std::vector<int>* jobs_times,
 bool Machine::Insert(int jobs_index) {
   jobs_.push_back(jobs_index);
   last_inserted_ = jobs_index;
-  if (jobs_.size() > 1) {
-    total_time_ += setup_times_->at(jobs_[jobs_.size() - 2]).at(jobs_.back());
-    total_time_ += jobs_times_->at(jobs_.back());
-  } else
-    total_time_ += jobs_times_->at(jobs_.back());
+
+  if (jobs_.size() > 1)
+    total_time_ +=
+        setup_times_->at(0).at(jobs_index + 1) + jobs_times_->at(jobs_index);
+  else
+    total_time_ += setup_times_->at(last_inserted_ + 1).at(jobs_index + 1) +
+                   jobs_times_->at(jobs_index);
 
   return true;
 }
@@ -28,14 +30,18 @@ bool Machine::Find(int jobs_index) const {
 
 size_t Machine::TotalTime() const { return total_time_; }
 
+size_t Machine::TctWithJob(int job) const {
+  return TCT() + ((jobs_.size() + 1) * (setup_times_->at(last_inserted_ + 1).at(job + 1) +
+                                  jobs_times_->at(job)));
+}
+
 size_t Machine::TCT() const {
   size_t tct = 0;
   for (size_t i = 0; i < jobs_.size(); ++i) {
-    if (i > 0) {
-      tct += (jobs_.size() - i) * (setup_times_->at(i - 1).at(i) + jobs_times_->at(i));
-    } else {
-      tct += (jobs_.size() - i) * (jobs_times_->at(i));
-    }
+    if (i > 1) 
+      tct += (jobs_.size() - i) * (setup_times_->at(i).at(i + 1) + jobs_times_->at(i));
+    else 
+      tct += (jobs_.size() - i) * (setup_times_->at(0).at(i + 1) + jobs_times_->at(i));
   }
   return tct;
 }
@@ -46,9 +52,8 @@ int Machine::LastInserted() const { return last_inserted_; }
 
 std::ostream& operator<<(std::ostream& os, const Machine& machine) {
   os << "Procesos: [ ";
-  for (auto& job : machine.jobs_) os << job << " ";
+  for (auto& job : machine.jobs_) os << job + 1 << " ";
   os << "]" << std::endl;
-  os << "TIEMPO ACUMULADO: " << machine.total_time_ << std::endl;
   os << "TCT: " << machine.TCT();
   return os;
 }
