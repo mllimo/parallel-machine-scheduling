@@ -36,7 +36,7 @@ class Machine {
 
   /**
    * @brief Devuelve cual fue el último indice insertado
-   * @return int 
+   * @return int
    */
   int LastInserted() const;
 

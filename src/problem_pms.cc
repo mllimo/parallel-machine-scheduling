@@ -12,7 +12,9 @@ ProblemPms::~ProblemPms() {
 }
 
 void ProblemPms::Solve() {
-
+  auto result = algorithm_->Solve(machines_, setup_times_, jobs_times_);
+  for (auto& machine : result)
+    std::cout << machine << std::endl;
 }
 
 std::istream& operator>>(std::istream& is, ProblemPms& pms) {

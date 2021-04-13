@@ -6,6 +6,7 @@ ProgramPms::~ProgramPms() {
 
 int ProgramPms::Run() {
   ProblemPms problem(arg_[1], new GreedyPms());
+  problem.Solve();
   return 0;
 }
 

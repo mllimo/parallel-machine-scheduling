@@ -33,5 +33,9 @@ const std::vector<int>& Machine::Jobs() const { return jobs_; }
 int Machine::LastInserted() const { return last_inserted_; }
 
 std::ostream& operator<<(std::ostream& os, const Machine& machine) {
+  os << "Procesos: [ ";
+  for (auto& job : machine.jobs_) os << job << " ";
+  os << "]" << std::endl;
+  os << "TCT: " << machine.total_time_;
   return os;
 }

@@ -12,8 +12,8 @@ class GreedyPms : public StrategyPms {
  public:
   ~GreedyPms();
   std::vector<Machine> Solve(size_t machines,
-                             const std::vector<std::vector<int>>& setup_times_,
-                             const std::vector<int>& jobs_times);
+                             std::vector<std::vector<int>>& setup_times_,
+                             std::vector<int>& jobs_times);
 
  protected:
   int GetMinNotExecuted(const std::vector<int>& jobs_times,

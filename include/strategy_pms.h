@@ -1,9 +1,10 @@
 #ifndef STRATEGY_PMS_H
 #define STRATEGY_PMS_H
 
+#include <machine.h>
+
 #include <iostream>
 #include <vector>
-#include <machine.h>
 
 /**
  * @brief Clase interfaz para poder realizar el patrón estrategia dentro
@@ -22,8 +23,8 @@ class StrategyPms {
    * procesos ejecutó cada máquina
    */
   virtual std::vector<Machine> Solve(
-      size_t machines, const std::vector<std::vector<int>>& setup_times_,
-      const std::vector<int>& jobs_times) = 0;
+      size_t machines, std::vector<std::vector<int>>& setup_times_,
+      std::vector<int>& jobs_times) = 0;
 };
 
 #endif
