@@ -13,8 +13,16 @@ ProblemPms::~ProblemPms() {
 
 void ProblemPms::Solve() {
   auto result = algorithm_->Solve(machines_, setup_times_, jobs_times_);
-  for (auto& machine : result)
+  size_t total_tcp = 0;
+  
+  for (auto& machine : result){
+    total_tcp += machine.TotalTime();
+  }
+
+  for (auto& machine : result){
     std::cout << machine << std::endl;
+  }
+  std::cout << "TCP TOTAL: " << total_tcp << std::endl;
 }
 
 std::istream& operator>>(std::istream& is, ProblemPms& pms) {

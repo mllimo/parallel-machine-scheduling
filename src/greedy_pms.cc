@@ -20,7 +20,7 @@ std::vector<Machine> GreedyPms::Solve(
       min_index = -1;
       for (j = 0; j < jobs_times.size(); ++j) {
         if (is_executed[j] == true) continue;
-        aux_time = result[i].TotalTime() + setup_times_[result[i].LastInserted()][j] + jobs_times[j];
+        aux_time = result[i].TCT() + setup_times_[result[i].LastInserted()][j] + jobs_times[j];
         if (best_time > aux_time) {
           min_index = j;
           best_time = aux_time;
