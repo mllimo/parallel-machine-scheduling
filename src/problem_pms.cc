@@ -12,18 +12,8 @@ ProblemPms::~ProblemPms() {
 }
 
 void ProblemPms::Solve() {
-  auto result = algorithm_->Solve(machines_, setup_times_, jobs_times_);
-  size_t total_tcp = 0;
-  
-  for (auto& machine : result){
-    total_tcp += machine.TCT();
-  }
-
-  for (auto& machine : result){
-    std::cout << machine << std::endl;
-  }
-
-  std::cout << "TCP TOTAL: " << total_tcp << std::endl;
+  result_ = algorithm_->Solve(machines_, setup_times_, jobs_times_);
+  tct_ = result_[0].TCT();
 }
 
 std::istream& operator>>(std::istream& is, ProblemPms& pms) {
@@ -55,4 +45,12 @@ std::istream& operator>>(std::istream& is, ProblemPms& pms) {
     }
   }
   return is;
+}
+
+std::ostream& operator<<(std::ostream& os, ProblemPms& pms) {
+  size_t counter = 1;
+  for (auto& machine : pms.result_)
+    os << "Maquina " << counter++ << ": " << machine << std::endl;
+  os << "TCP: " << pms.tct_;
+  return os;
 }

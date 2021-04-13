@@ -53,7 +53,6 @@ int Machine::LastInserted() const { return last_inserted_; }
 std::ostream& operator<<(std::ostream& os, const Machine& machine) {
   os << "Procesos: [ ";
   for (auto& job : machine.jobs_) os << job + 1 << " ";
-  os << "]" << std::endl;
-  os << "TCT: " << machine.TCT();
+  os << "]";
   return os;
 }

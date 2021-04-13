@@ -30,12 +30,15 @@ class ProblemPms {
   void Solve();
 
   friend std::istream& operator>>(std::istream& is, ProblemPms& pms);
+  friend std::ostream& operator<<(std::ostream& os, ProblemPms& pms);
 
  protected:
   size_t machines_;
   std::vector<std::vector<int>> setup_times_;
   std::vector<int> jobs_times_;
   StrategyPms* algorithm_;
+  std::vector<Machine> result_;
+  size_t tct_;
 };
 
 #endif
