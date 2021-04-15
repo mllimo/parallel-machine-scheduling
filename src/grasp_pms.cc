@@ -22,18 +22,22 @@ std::vector<Machine> GraspPms::Solve(size_t machines,
   // Iteraciones sin mejora por ejemplo
   size_t max_iteration_no_improvement = 5;
   size_t iterations_no_improvement = 0;
+  bool is_first = true;
   while (iterations_no_improvement < max_iteration_no_improvement) {
     // Fase construvtiva
     Construct(result, jobs_times);
 
     // Actualizar la solucion
-    if (result < best_result) {
+    if (result < best_result || is_first) {
       best_result = result;
       iterations_no_improvement = 0;
+      is_first = false;
     } else {
       ++iterations_no_improvement;
     }
     result.resize(machines, Machine(&jobs_times, &setup_times));
+    is_executed.resize(jobs_times.size(), false);
+    
   }
   return best_result;
 }
