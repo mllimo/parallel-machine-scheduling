@@ -62,6 +62,10 @@ bool operator<(const Machine& machine1, const Machine& machine2) {
   return machine1.TCT() < machine2.TCT();
 }
 
+bool operator==(const Machine& machine1, const Machine& machine2) {
+  return machine1.jobs_ == machine2.jobs_;
+}
+
 Machine& Machine::operator=(const Machine& machine) {
   last_inserted_ = machine.last_inserted_;
   jobs_ = machine.jobs_;

@@ -6,6 +6,7 @@
 #include <grasp_pms.h>
 #include <problem_pms.h>
 #include <program.h>
+#include <swap_intra.h>
 
 class ProgramPms : public Program {
  public:

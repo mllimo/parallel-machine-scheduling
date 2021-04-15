@@ -69,6 +69,7 @@ class Machine {
 
   friend std::ostream& operator<<(std::ostream& os, const Machine& machine);
   friend bool operator<(const Machine& machine1, const Machine& machine2);
+  friend bool operator==(const Machine& machine1, const Machine& machine2);
   Machine& operator=(const Machine& machine);
 
  private:

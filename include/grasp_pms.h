@@ -10,7 +10,7 @@ class GraspPms : public GreedyPms {
  public:
   GraspPms();
   GraspPms(size_t lrc_size, size_t max_iteration_no_improvement,
-           LocalSearch::LocalSearch* local_search);
+           LocalSearch* local_search_);
   virtual ~GraspPms();
 
   virtual std::vector<Machine> Solve(size_t machines,
@@ -45,7 +45,7 @@ class GraspPms : public GreedyPms {
    */
   void Construct(std::vector<Machine>& machines, std::vector<int>& jobs_times);
 
-  void LocalSearch(std::vector<Machine>& solution);
+  void Local(std::vector<Machine>& solution);
 
   void UpdateSolution(std::vector<Machine>& actual_solution,
                       std::vector<Machine>& best_solution);
