@@ -2,6 +2,7 @@
 #define GRASP_PMS_H
 
 #include <strategy_pms.h>
+#include <random>
 
 class GraspPms : public StrategyPms {
  public:
@@ -22,8 +23,23 @@ class GraspPms : public StrategyPms {
   int GetMinNotExecuted(const std::vector<int>& jobs_times,
                         const std::vector<std::vector<int>>& setup_times);
 
+  /**
+   * @brief Selecciona el mejor candidato hasta el momento. id de proceso
+   * @param setup_times 
+   * @param jobs_times 
+   * @param machine 
+   * @return size_t 
+   */
   size_t Selection(std::vector<std::vector<int>>& setup_times,
                    std::vector<int>& jobs_times, Machine& machine);
+
+  /**
+   * @brief Selecciona aleatoriamente un candidato entre los mejores
+   * @param rcl Mejores N candidatos hasta el momento
+   * @return size_t 
+   */
+  size_t SelectionRandom(std::vector<int>& rcl);
+  
   /**
    * @brief Función que escoge los N mejores candidatos
    * @param setup_times
@@ -41,7 +57,7 @@ class GraspPms : public StrategyPms {
    * @param jobs_times
    * @return std::vector<Machine>
    */
-  std::vector<Machine> Construct(size_t machines,
+  std::vector<Machine> Construct(std::vector<Machine>& machines,
                                  std::vector<std::vector<int>>& setup_times,
                                  std::vector<int>& jobs_times);
 };

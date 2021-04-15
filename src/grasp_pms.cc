@@ -17,7 +17,11 @@ std::vector<Machine> GraspPms::Solve(size_t machines,
     machine.Insert(GetMinNotExecuted(jobs_times, setup_times));
   }
 
-  // Fase constructiva
+  // Buscar criterio de parada
+  while (true) {
+      // Fase construvtiva
+      Construct(result, setup_times, jobs_times);
+    }
 }
 
 bool GraspPms::AllVisited(const std::vector<bool>& visited) const {
@@ -56,6 +60,10 @@ size_t GraspPms::Selection(std::vector<std::vector<int>>& setup_times,
   return min_index;
 }
 
+size_t GraspPms::SelectionRandom(std::vector<int>& rcl) {
+  
+}
+
 std::vector<int> GraspPms::MakeRcl(std::vector<std::vector<int>>& setup_times,
                                    std::vector<int>& jobs_times,
                                    Machine& machine) {
@@ -68,8 +76,16 @@ std::vector<int> GraspPms::MakeRcl(std::vector<std::vector<int>>& setup_times,
     best_candidates.push_back(selected);
   }
   return best_candidates;
+  size_t machines
 }
 
 std::vector<Machine> GraspPms::Construct(
-    size_t machines, std::vector<std::vector<int>>& setup_times,
-    std::vector<int>& jobs_times) {}
+    std::vector<Machine>& machines, std::vector<std::vector<int>>& setup_times,
+    std::vector<int>& jobs_times) {
+  std::vector<int> rcl;
+  while (!AllVisited(is_executed)) {
+    for (auto& machine : machines) {
+      rcl = MakeRcl(setup_times, jobs_times, machine);
+    }
+  }
+}
