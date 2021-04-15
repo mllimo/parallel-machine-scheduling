@@ -46,9 +46,10 @@ class Machine {
    * @return const std::vector<int>&
    */
   const std::vector<int>& Jobs() const;
-  
+
   /**
-   * @brief Devuelve el TCT actual de los procesos que han sido ejecutados en ella
+   * @brief Devuelve el TCT actual de los procesos que han sido ejecutados en
+   * ella
    */
   size_t TCT() const;
 
