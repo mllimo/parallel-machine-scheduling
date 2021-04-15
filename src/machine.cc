@@ -1,39 +1,34 @@
 #include <machine.h>
 
-Machine::Machine() { 
-  total_time_ = 0;
-  last_inserted_ = -1;
-}
+Machine::Machine() { last_inserted_ = -1; }
 
 Machine::Machine(std::vector<int>* jobs_times,
                  std::vector<std::vector<int>>* setup_times) {
   jobs_times_ = jobs_times;
   setup_times_ = setup_times;
-  total_time_ = 0;
   last_inserted_ = -1;
 }
 
-bool Machine::Insert(int jobs_index) {
+Machine::Machine(const Machine& machine) { *this = machine; }
+
+void Machine::Insert(size_t jobs_index) {
   jobs_.push_back(jobs_index);
-
-  if (jobs_.size() > 1)
-    total_time_ +=
-        setup_times_->at(0).at(jobs_index + 1) + jobs_times_->at(jobs_index);
-  else
-    total_time_ += setup_times_->at(last_inserted_ + 1).at(jobs_index + 1) +
-                   jobs_times_->at(jobs_index);
-
   last_inserted_ = jobs_index;
-  return true;
 }
 
-bool Machine::Find(int jobs_index) const {
-  return std::find(jobs_.begin(), jobs_.end(), jobs_index) != jobs_.end();
+void Machine::Insert(size_t index, size_t job_index) {
+  jobs_.insert(jobs_.begin() + index, job_index);
 }
 
-size_t Machine::TotalTime() const { return total_time_; }
+void Machine::SwapIndexex(size_t i, size_t j) {
+  std::swap(jobs_[i], jobs_[j]);
+}
 
-size_t Machine::TctWithJob(int job) const {
+bool Machine::Find(size_t job_index) const {
+  return std::find(jobs_.begin(), jobs_.end(), job_index) != jobs_.end();
+}
+
+size_t Machine::TctWithJob(size_t job) const {
   return TCT() + ((jobs_.size() + 1) *
                   (setup_times_->at(last_inserted_ + 1).at(job + 1) +
                    jobs_times_->at(job)));
@@ -65,4 +60,12 @@ std::ostream& operator<<(std::ostream& os, const Machine& machine) {
 
 bool operator<(const Machine& machine1, const Machine& machine2) {
   return machine1.TCT() < machine2.TCT();
+}
+
+Machine& Machine::operator=(const Machine& machine) {
+  last_inserted_ = machine.last_inserted_;
+  jobs_ = machine.jobs_;
+  jobs_times_ = machine.jobs_times_;
+  setup_times_ = machine.setup_times_;
+  return *this;
 }

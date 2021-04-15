@@ -32,6 +32,8 @@ std::vector<Machine> GraspPms::Solve(size_t machines,
   while (iterations_no_improvement < max_iteration_no_improvement) {
     // Fase construvtiva
     Construct(solution, jobs_times);
+    // Busqueda Local
+    
     // Actualizar la solucion
     UpdateSolution(solution, best_solution);
     // Reseteo

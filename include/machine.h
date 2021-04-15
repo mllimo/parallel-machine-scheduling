@@ -10,29 +10,36 @@ class Machine {
   Machine();
   Machine(std::vector<int>* jobs_times,
           std::vector<std::vector<int>>* setup_times);
+  Machine(const Machine& machine);
 
   /**
    * @brief Inserta el ínidice del proceso
    * @param jobs_index El proceso
-   * @return true Si se pudo insertar
-   * @return false Si no se pudo insertar
    */
-  bool Insert(int jobs_index);
+  void Insert(size_t jobs_index);
+
+  /**
+   * @brief Inserta un elemento en la posición dada
+   * @param index Posición a indexar el nuevo proceso
+   * @param job_index Proceso a indexar
+   */
+  void Insert(size_t index, size_t job_index);
+
+  /**
+   * @brief Intercambia dos indices del vector de procesos
+   * @param i Indice
+   * @param j Indice
+   */
+  void SwapIndexex(size_t i, size_t j);
 
   /**
    * @brief Intenta encontrar el proceso dentro del conjunto de procesos de la
    * máquina
-   * @param jobs_index Proceso a buscar
+   * @param job_index Proceso a buscar
    * @return true Si lo encontró
    * @return false Si no lo encontró
    */
-  bool Find(int jobs_index) const;
-
-  /**
-   * @brief Devuelve el tiempo acumulado de la máquina
-   * @return size_t
-   */
-  size_t TotalTime() const;
+  bool Find(size_t job_index) const;
 
   /**
    * @brief Devuelve cual fue el último indice insertado
@@ -56,13 +63,13 @@ class Machine {
   /**
    * @brief Devuelve el TCT suponiendo que se agrega el proceso dado
    */
-  size_t TctWithJob(int job) const;
+  size_t TctWithJob(size_t job) const;
 
   friend std::ostream& operator<<(std::ostream& os, const Machine& machine);
   friend bool operator<(const Machine& machine1, const Machine& machine2);
+  Machine& operator=(const Machine& machine);
 
  private:
-  size_t total_time_;
   size_t last_inserted_;
   std::vector<int> jobs_;
   std::vector<int>* jobs_times_;
