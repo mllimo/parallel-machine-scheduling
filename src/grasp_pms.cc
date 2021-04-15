@@ -7,10 +7,12 @@ GraspPms::GraspPms() {
   iterations_no_improvement = 0;
 }
 
-GraspPms::GraspPms(size_t lrc_size, size_t max_iteration_no_improvement) {
+GraspPms::GraspPms(size_t lrc_size, size_t max_iteration_no_improvement,
+                   LocalSearch::LocalSearch* local_search) {
   this->lrc_size = lrc_size;
   is_first_run = true;
   this->max_iteration_no_improvement = max_iteration_no_improvement;
+  this->local_seach = local_seach;
   iterations_no_improvement = 0;
 }
 
@@ -33,7 +35,7 @@ std::vector<Machine> GraspPms::Solve(size_t machines,
     // Fase construvtiva
     Construct(solution, jobs_times);
     // Busqueda Local
-    
+    LocalSearch(solution);
     // Actualizar la solucion
     UpdateSolution(solution, best_solution);
     // Reseteo
@@ -72,6 +74,16 @@ void GraspPms::Construct(std::vector<Machine>& machines,
       machine.Insert(candidate);
     }
   }
+}
+
+void GraspPms::LocalSearch(std::vector<Machine>& solution) {
+  std::vector<Machine> best_solution = solution;
+  do {
+    (*local_seach)(solution);
+    if (solution < best_solution) {
+      best_solution = solution;
+    }
+  } while (solution != best_solution);
 }
 
 void GraspPms::UpdateSolution(std::vector<Machine>& actual_solution,

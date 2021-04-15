@@ -20,9 +20,7 @@ void Machine::Insert(size_t index, size_t job_index) {
   jobs_.insert(jobs_.begin() + index, job_index);
 }
 
-void Machine::SwapIndexex(size_t i, size_t j) {
-  std::swap(jobs_[i], jobs_[j]);
-}
+void Machine::SwapIndexex(size_t i, size_t j) { std::swap(jobs_[i], jobs_[j]); }
 
 bool Machine::Find(size_t job_index) const {
   return std::find(jobs_.begin(), jobs_.end(), job_index) != jobs_.end();
@@ -48,6 +46,8 @@ size_t Machine::TCT() const {
 }
 
 const std::vector<int>& Machine::Jobs() const { return jobs_; }
+
+std::vector<int>& Machine::Jobs() { return jobs_; }
 
 size_t Machine::LastInserted() const { return last_inserted_; }
 

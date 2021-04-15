@@ -54,6 +54,8 @@ class Machine {
    */
   const std::vector<int>& Jobs() const;
 
+  std::vector<int>& Jobs();
+
   /**
    * @brief Devuelve el TCT actual de los procesos que han sido ejecutados en
    * ella
