@@ -62,9 +62,9 @@ class Machine {
   friend bool operator<(const Machine& machine1, const Machine& machine2);
 
  private:
+  size_t total_time_;
   size_t last_inserted_;
   std::vector<int> jobs_;
-  size_t total_time_;
   std::vector<int>* jobs_times_;
   std::vector<std::vector<int>>* setup_times_;
 };

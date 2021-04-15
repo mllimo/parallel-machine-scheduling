@@ -5,6 +5,7 @@ ProblemPms::ProblemPms(const std::string& file_path, StrategyPms* strategy) {
   if (!input_file.is_open()) std::cerr << "No se pudo abrir el archivo\n";
   input_file >> *this;
   algorithm_ = strategy;
+  tct_ = 0;
 }
 
 ProblemPms::~ProblemPms() {
@@ -13,7 +14,8 @@ ProblemPms::~ProblemPms() {
 
 void ProblemPms::Solve() {
   result_ = algorithm_->Solve(machines_, setup_times_, jobs_times_);
-  tct_ = result_[0].TCT();
+  for (auto& machine : result_)
+    tct_ += machine.TCT();
 }
 
 std::istream& operator>>(std::istream& is, ProblemPms& pms) {

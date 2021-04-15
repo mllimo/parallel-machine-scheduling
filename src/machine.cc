@@ -44,10 +44,10 @@ size_t Machine::TCT() const {
   for (size_t i = 0; i < jobs_.size(); ++i) {
     if (i > 1)
       tct += (jobs_.size() - i) *
-             (setup_times_->at(i).at(i + 1) + jobs_times_->at(i));
+             (setup_times_->at(i + 1).at(i + 1) + jobs_times_->at(jobs_[i]));
     else
       tct += (jobs_.size() - i) *
-             (setup_times_->at(0).at(i + 1) + jobs_times_->at(i));
+             (setup_times_->at(0).at(i + 1) + jobs_times_->at(jobs_[i]));
   }
   return tct;
 }
