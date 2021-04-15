@@ -11,6 +11,7 @@ std::vector<Machine> GraspPms::Solve(size_t machines,
                                      std::vector<int>& jobs_times) {
   // Preprocesamiento
   std::vector<Machine> result(machines, Machine(&jobs_times, &setup_times));
+  std::vector<Machine> best_result = result;
   is_executed.resize(jobs_times.size(), false);
 
   for (auto& machine : result) {
@@ -18,10 +19,23 @@ std::vector<Machine> GraspPms::Solve(size_t machines,
   }
 
   // Buscar criterio de parada
-  while (true) {
-      // Fase construvtiva
-      Construct(result, setup_times, jobs_times);
+  // Iteraciones sin mejora por ejemplo
+  size_t max_iteration_no_improvement = 5;
+  size_t iterations_no_improvement = 0;
+  while (iterations_no_improvement < max_iteration_no_improvement) {
+    // Fase construvtiva
+    Construct(result, jobs_times);
+
+    // Actualizar la solucion
+    if (result < best_result) {
+      best_result = result;
+      iterations_no_improvement = 0;
+    } else {
+      ++iterations_no_improvement;
     }
+    result.resize(machines, Machine(&jobs_times, &setup_times));
+  }
+  return best_result;
 }
 
 bool GraspPms::AllVisited(const std::vector<bool>& visited) const {
@@ -46,10 +60,9 @@ int GraspPms::GetMinNotExecuted(
   return min_index;
 }
 
-size_t GraspPms::Selection(std::vector<std::vector<int>>& setup_times,
-                           std::vector<int>& jobs_times, Machine& machine) {
-  int best_time = std::numeric_limits<int>::max();
-  size_t i, j, min_index;
+size_t GraspPms::Selection(std::vector<int>& jobs_times, Machine& machine) {
+  size_t best_time = std::numeric_limits<size_t>::max();
+  size_t j, min_index;
   for (j = 0; j < jobs_times.size(); ++j) {
     if (is_executed[j]) continue;
     if (machine.TctWithJob(j) < best_time) {
@@ -61,31 +74,35 @@ size_t GraspPms::Selection(std::vector<std::vector<int>>& setup_times,
 }
 
 size_t GraspPms::SelectionRandom(std::vector<int>& rcl) {
-  
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<size_t> distrib(0, rcl.size() - 1);
+  return rcl[distrib(gen)];
 }
 
-std::vector<int> GraspPms::MakeRcl(std::vector<std::vector<int>>& setup_times,
-                                   std::vector<int>& jobs_times,
+std::vector<int> GraspPms::MakeRcl(std::vector<int>& jobs_times,
                                    Machine& machine) {
   std::vector<int> best_candidates;
   size_t selected;
   for (size_t i = 0; i < lrc_size; ++i) {
     if (AllVisited(is_executed)) break;
-    selected = Selection(setup_times, jobs_times, machine);
+    selected = Selection(jobs_times, machine);
     if (is_executed[selected]) std::cerr << "Arreglar esto\n";
     best_candidates.push_back(selected);
   }
   return best_candidates;
-  size_t machines
 }
 
-std::vector<Machine> GraspPms::Construct(
-    std::vector<Machine>& machines, std::vector<std::vector<int>>& setup_times,
-    std::vector<int>& jobs_times) {
+void GraspPms::Construct(std::vector<Machine>& machines,
+                         std::vector<int>& jobs_times) {
   std::vector<int> rcl;
+  size_t candidate_chose;
   while (!AllVisited(is_executed)) {
     for (auto& machine : machines) {
-      rcl = MakeRcl(setup_times, jobs_times, machine);
+      rcl = MakeRcl(jobs_times, machine);
+      candidate_chose = SelectionRandom(rcl);
+      is_executed[candidate_chose] = true;
+      machine.Insert(candidate_chose);
     }
   }
 }

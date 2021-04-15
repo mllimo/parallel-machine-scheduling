@@ -54,11 +54,15 @@ size_t Machine::TCT() const {
 
 const std::vector<int>& Machine::Jobs() const { return jobs_; }
 
-int Machine::LastInserted() const { return last_inserted_; }
+size_t Machine::LastInserted() const { return last_inserted_; }
 
 std::ostream& operator<<(std::ostream& os, const Machine& machine) {
   os << "Procesos: [ ";
   for (auto& job : machine.jobs_) os << job + 1 << " ";
   os << "]";
   return os;
+}
+
+bool operator<(const Machine& machine1, const Machine& machine2) {
+  return machine1.TCT() < machine2.TCT();
 }

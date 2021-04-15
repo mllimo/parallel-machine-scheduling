@@ -1,8 +1,6 @@
 #include <program_pms.h>
 
-ProgramPms::~ProgramPms() {
-
-}
+ProgramPms::~ProgramPms() {}
 
 int ProgramPms::Run() {
   ProblemPms problem(arg_[1], new GreedyPms());
@@ -12,6 +10,10 @@ int ProgramPms::Run() {
   ProblemPms problem2(arg_[1], new MyGreedyPms());
   problem2.Solve();
   std::cout << problem2 << std::endl;
+
+  ProblemPms problem3(arg_[1], new GraspPms(3));
+  problem3.Solve();
+  std::cout << problem3 << std::endl;
   return 0;
 }
 

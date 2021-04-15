@@ -36,9 +36,9 @@ class Machine {
 
   /**
    * @brief Devuelve cual fue el último indice insertado
-   * @return int
+   * @return size_t
    */
-  int LastInserted() const;
+  size_t LastInserted() const;
 
   /**
    * @brief Devuelve el conjunto de procesos que han sido ejecutados en la
@@ -59,9 +59,10 @@ class Machine {
   size_t TctWithJob(int job) const;
 
   friend std::ostream& operator<<(std::ostream& os, const Machine& machine);
+  friend bool operator<(const Machine& machine1, const Machine& machine2);
 
  private:
-  int last_inserted_;
+  size_t last_inserted_;
   std::vector<int> jobs_;
   size_t total_time_;
   std::vector<int>* jobs_times_;
