@@ -14,11 +14,14 @@ std::vector<Machine> MyGreedyPms::Solve(
   for (auto& machine : result)
     machine.Insert(GetFirstJob(setup_times, jobs_times));
 
+  size_t candidate;
   while (!IsAllVisited()) {
-    for (auto& machine : result)
-      machine.Insert(Selection(setup_times, jobs_times, machine));
+    for (auto& machine : result) {
+      candidate = Selection(setup_times, jobs_times, machine);
+      is_executed[candidate] = true;
+      machine.Insert(candidate);
+    }
   }
-
   return result;
 }
 
@@ -54,6 +57,5 @@ size_t MyGreedyPms::Selection(std::vector<std::vector<int>>& setup_times,
       index = i;
     }
   }
-  is_executed[index] = true;
   return index;
 }

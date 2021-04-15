@@ -1,14 +1,14 @@
 #ifndef GRASP_PMS_H
 #define GRASP_PMS_H
 
-#include <strategy_pms.h>
+#include <greedy_pms.h>
 
 #include <random>
 
-class GraspPms : public StrategyPms {
+class GraspPms : public GreedyPms {
  public:
   GraspPms();
-  GraspPms(size_t lrc_size);
+  GraspPms(size_t lrc_size, size_t max_iteration_no_improvement);
   virtual ~GraspPms();
 
   virtual std::vector<Machine> Solve(size_t machines,
@@ -16,21 +16,10 @@ class GraspPms : public StrategyPms {
                                      std::vector<int>& jobs_times);
 
  protected:
-  std::vector<bool> is_executed;
+  bool is_first_run;
   size_t lrc_size;
-
-  bool IsAllVisited(const std::vector<bool>& visited) const;
-
-  int GetMinNotExecuted(const std::vector<int>& jobs_times,
-                        const std::vector<std::vector<int>>& setup_times);
-
-  /**
-   * @brief Selecciona el mejor candidato hasta el momento. id de proceso
-   * @param jobs_times
-   * @param machine
-   * @return size_t
-   */
-  size_t Selection(std::vector<int>& jobs_times, Machine& machine);
+  size_t max_iteration_no_improvement;
+  size_t iterations_no_improvement;
 
   /**
    * @brief Selecciona aleatoriamente un candidato entre los mejores
@@ -52,6 +41,9 @@ class GraspPms : public StrategyPms {
    * @param jobs_times
    */
   void Construct(std::vector<Machine>& machines, std::vector<int>& jobs_times);
+
+  void UpdateSolution(std::vector<Machine>& actua_solution,
+                      std::vector<Machine>& best_solution);
 };
 
 #endif

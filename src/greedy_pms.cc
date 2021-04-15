@@ -13,9 +13,13 @@ std::vector<Machine> GreedyPms::Solve(
     machine.Insert(GetFirstJob(jobs_times, setup_times));
   }
 
+  size_t candidate;
   while (!IsAllVisited()) {
-    for (auto& machine : vector_machines)
-      machine.Insert(Selection(jobs_times, machine));
+    for (auto& machine : vector_machines) {
+      candidate = Selection(jobs_times, machine);
+      is_executed[candidate] = true;
+      machine.Insert(candidate);
+    }
   }
 
   return vector_machines;
@@ -47,7 +51,6 @@ size_t GreedyPms::Selection(std::vector<int>& jobs_times, Machine& machine) {
       best_time = machine.TctWithJob(j);
     }
   }
-  is_executed[min_index] = true;
   return min_index;
 }
 
