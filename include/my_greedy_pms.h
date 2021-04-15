@@ -20,7 +20,7 @@ class MyGreedyPms : public StrategyPms {
                    std::vector<int>& jobs_times, std::vector<bool>& is_executed,
                    Machine& machine);
 
-  bool AllVisited(const std::vector<bool>& visited) const;
+  bool IsAllVisited(const std::vector<bool>& visited) const;
 };
 
 #endif

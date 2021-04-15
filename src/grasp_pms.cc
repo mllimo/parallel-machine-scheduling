@@ -42,7 +42,7 @@ std::vector<Machine> GraspPms::Solve(size_t machines,
   return best_result;
 }
 
-bool GraspPms::AllVisited(const std::vector<bool>& visited) const {
+bool GraspPms::IsAllVisited(const std::vector<bool>& visited) const {
   for (const auto& element : visited)
     if (element == false) return false;
   return true;
@@ -89,7 +89,7 @@ std::vector<int> GraspPms::MakeRcl(std::vector<int>& jobs_times,
   std::vector<int> best_candidates;
   size_t selected;
   for (size_t i = 0; i < lrc_size; ++i) {
-    if (AllVisited(is_executed)) break;
+    if (IsAllVisited(is_executed)) break;
     selected = Selection(jobs_times, machine);
     if (is_executed[selected]) std::cerr << "Arreglar esto\n";
     best_candidates.push_back(selected);
@@ -101,7 +101,7 @@ void GraspPms::Construct(std::vector<Machine>& machines,
                          std::vector<int>& jobs_times) {
   std::vector<int> rcl;
   size_t candidate_chose;
-  while (!AllVisited(is_executed)) {
+  while (!IsAllVisited(is_executed)) {
     for (auto& machine : machines) {
       rcl = MakeRcl(jobs_times, machine);
       candidate_chose = SelectionRandom(rcl);

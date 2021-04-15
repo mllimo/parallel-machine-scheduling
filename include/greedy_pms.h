@@ -2,6 +2,7 @@
 #define GREEDY_H
 
 #include <strategy_pms.h>
+
 #include <algorithm>
 
 /**
@@ -9,17 +10,21 @@
  */
 class GreedyPms : public StrategyPms {
  public:
-  ~GreedyPms();
-  std::vector<Machine> Solve(size_t machines,
-                             std::vector<std::vector<int>>& setup_times,
-                             std::vector<int>& jobs_times);
+  virtual ~GreedyPms();
+  virtual std::vector<Machine> Solve(size_t machines,
+                                     std::vector<std::vector<int>>& setup_times,
+                                     std::vector<int>& jobs_times);
 
  protected:
-  int GetMinNotExecuted(const std::vector<int>& jobs_times,
-                        const std::vector<std::vector<int>>& setup_times,
-                        std::vector<bool>& is_executed);
+  std::vector<bool> is_executed;
 
-  bool AllVisited(const std::vector<bool>& visited) const;
+  virtual size_t GetFirstJob(const std::vector<int>& jobs_times,
+                     const std::vector<std::vector<int>>& setup_times);
+
+  virtual size_t Selection(std::vector<int>& jobs_times, Machine& machine);
+
+  bool IsAllVisited() const;
+  void ResetExecuted(size_t size);
 };
 
 #endif

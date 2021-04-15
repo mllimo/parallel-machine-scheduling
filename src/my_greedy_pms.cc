@@ -15,7 +15,7 @@ std::vector<Machine> MyGreedyPms::Solve(
   for (auto& machine : result)
     machine.Insert(GetFirstJob(setup_times, jobs_times, is_executed));
   // Mientras no hayamos procesado todos los trabajos
-  while (!AllVisited(is_executed)) {
+  while (!IsAllVisited(is_executed)) {
     // Seleccionar el que tenga mejor proporcion tiempo_proceso / tiempo
     for (auto& machine : result)
       machine.Insert(Selection(setup_times, jobs_times, is_executed, machine));
@@ -60,7 +60,7 @@ size_t MyGreedyPms::Selection(std::vector<std::vector<int>>& setup_times,
   return index;
 }
 
-bool MyGreedyPms::AllVisited(const std::vector<bool>& visited) const {
+bool MyGreedyPms::IsAllVisited(const std::vector<bool>& visited) const {
   for (const auto& element : visited)
     if (element == false) return false;
   return true;

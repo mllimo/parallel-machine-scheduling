@@ -19,7 +19,7 @@ class GraspPms : public StrategyPms {
   std::vector<bool> is_executed;
   size_t lrc_size;
 
-  bool AllVisited(const std::vector<bool>& visited) const;
+  bool IsAllVisited(const std::vector<bool>& visited) const;
 
   int GetMinNotExecuted(const std::vector<int>& jobs_times,
                         const std::vector<std::vector<int>>& setup_times);
