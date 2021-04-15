@@ -1,9 +1,9 @@
 #ifndef MY_GREEDY_PMS_H
 #define MY_GREEDY_PMS_H
 
-#include <strategy_pms.h>
+#include <greedy_pms.h>
 
-class MyGreedyPms : public StrategyPms {
+class MyGreedyPms : public GreedyPms {
  public:
   MyGreedyPms();
   ~MyGreedyPms();
@@ -12,15 +12,23 @@ class MyGreedyPms : public StrategyPms {
                              std::vector<int>& jobs_times);
 
  protected:
+  /**
+   * @brief Busca el mejor primer candidato
+   * @param setup_times 
+   * @param jobs_times 
+   * @return size_t 
+   */
   size_t GetFirstJob(std::vector<std::vector<int>>& setup_times,
-                     std::vector<int>& jobs_times,
-                     std::vector<bool>& is_executed);
-
+                     std::vector<int>& jobs_times);
+  /**
+   * @brief Selecciona el candidato con mayor tiempo_proceso / tiempo_preparación
+   * @param setup_times 
+   * @param jobs_times 
+   * @param machine 
+   * @return size_t 
+   */
   size_t Selection(std::vector<std::vector<int>>& setup_times,
-                   std::vector<int>& jobs_times, std::vector<bool>& is_executed,
-                   Machine& machine);
-
-  bool IsAllVisited(const std::vector<bool>& visited) const;
+                   std::vector<int>& jobs_times, Machine& machine);
 };
 
 #endif

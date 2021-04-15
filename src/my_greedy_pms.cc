@@ -7,25 +7,23 @@ MyGreedyPms::~MyGreedyPms() {}
 std::vector<Machine> MyGreedyPms::Solve(
     size_t machines, std::vector<std::vector<int>>& setup_times,
     std::vector<int>& jobs_times) {
-  // Vector de soluciones
+  // Preprocesamiento
   std::vector<Machine> result(machines, Machine(&jobs_times, &setup_times));
-  // Vector de candidatos
-  std::vector<bool> is_executed(jobs_times.size(), false);
-  // Inicializamos nuestras maquinas
+  ResetExecuted(jobs_times.size());
+
   for (auto& machine : result)
-    machine.Insert(GetFirstJob(setup_times, jobs_times, is_executed));
-  // Mientras no hayamos procesado todos los trabajos
-  while (!IsAllVisited(is_executed)) {
-    // Seleccionar el que tenga mejor proporcion tiempo_proceso / tiempo
+    machine.Insert(GetFirstJob(setup_times, jobs_times));
+
+  while (!IsAllVisited()) {
     for (auto& machine : result)
-      machine.Insert(Selection(setup_times, jobs_times, is_executed, machine));
+      machine.Insert(Selection(setup_times, jobs_times, machine));
   }
+
   return result;
 }
 
 size_t MyGreedyPms::GetFirstJob(std::vector<std::vector<int>>& setup_times,
-                                std::vector<int>& jobs_times,
-                                std::vector<bool>& is_executed) {
+                                std::vector<int>& jobs_times) {
   size_t index;
   float proportion;
   // Cuan mayor sea la proporcion mejor
@@ -41,16 +39,16 @@ size_t MyGreedyPms::GetFirstJob(std::vector<std::vector<int>>& setup_times,
   return index;
 }
 
+// Seleccionar el que tenga mejor proporcion tiempo_proceso / tiempo
 size_t MyGreedyPms::Selection(std::vector<std::vector<int>>& setup_times,
-                              std::vector<int>& jobs_times,
-                              std::vector<bool>& is_executed,
-                              Machine& machine) {
+                              std::vector<int>& jobs_times, Machine& machine) {
   size_t index;
   float proportion;
   float max_proportion = std::numeric_limits<float>::min();
   for (size_t i = 0; i < jobs_times.size(); ++i) {
     if (is_executed[i] || machine.LastInserted() + 1 == i + 1) continue;
-    proportion = (float)jobs_times[i] / (float)setup_times[machine.LastInserted() + 1][i + 1];
+    proportion = (float)jobs_times[i] /
+                 (float)setup_times[machine.LastInserted() + 1][i + 1];
     if (proportion > max_proportion) {
       max_proportion = proportion;
       index = i;
@@ -58,10 +56,4 @@ size_t MyGreedyPms::Selection(std::vector<std::vector<int>>& setup_times,
   }
   is_executed[index] = true;
   return index;
-}
-
-bool MyGreedyPms::IsAllVisited(const std::vector<bool>& visited) const {
-  for (const auto& element : visited)
-    if (element == false) return false;
-  return true;
 }
