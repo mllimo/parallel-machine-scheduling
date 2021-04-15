@@ -3,9 +3,9 @@
 
 #include <local_swap.h>
 
-class SwapIntra : public LocalSwap {
+class SwapEntra : public LocalSwap {
  public:
-  ~SwapIntra();
+  ~SwapEntra();
   void operator()(std::vector<Machine>& solution);
 };
 
