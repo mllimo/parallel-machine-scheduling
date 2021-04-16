@@ -6,10 +6,10 @@
 #include <my_greedy_pms.h>
 #include <problem_pms.h>
 #include <program.h>
-#include <swap_entra.h>
-#include <swap_intra.h>
-#include <reinsert_intra.h>
 #include <reinsert_entre.h>
+#include <reinsert_intra.h>
+#include <swap_entre.h>
+#include <swap_intra.h>
 
 class ProgramPms : public Program {
  public:

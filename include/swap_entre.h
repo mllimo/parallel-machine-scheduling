@@ -1,11 +1,11 @@
-#ifndef SWAP_ENTRA_H
-#define SWAP_ENTRA_H
+#ifndef SWAP_ENTRE_H
+#define SWAP_ENTRE_H
 
 #include <local_swap.h>
 
-class SwapEntra : public LocalSwap {
+class SwapEntre : public LocalSwap {
  public:
-  ~SwapEntra();
+  ~SwapEntre();
   void operator()(std::vector<Machine>& solution);
 };
 

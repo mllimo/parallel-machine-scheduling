@@ -1,8 +1,8 @@
-#include <swap_entra.h>
+#include <swap_entre.h>
 
-SwapEntra::~SwapEntra() {}
+SwapEntre::~SwapEntre() {}
 
-void SwapEntra::operator()(std::vector<Machine>& solution) {
+void SwapEntre::operator()(std::vector<Machine>& solution) {
   auto best_neighbour_solution = solution;
   auto neighbour_solution = solution;
   // Padre
