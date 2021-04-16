@@ -9,10 +9,15 @@ void ReinsertIntra::operator()(std::vector<Machine>& solution) {
   // maquinas
   for (size_t i = 0; i < neighbour_solution.size(); ++i) {
     for (size_t erase = 0; erase < neighbour_solution[i].Jobs().size() - 1; ++erase) {
-      for (size_t insert = erase + 1; insert < neighbour_solution[i].Jobs().size() - 1; ++insert) {
+      for (size_t insert = erase + 1; insert <= neighbour_solution[i].Jobs().size(); ++insert) {
         erase_element = neighbour_solution[i].Jobs()[erase];
         neighbour_solution[i].Jobs().erase(neighbour_solution[i].Jobs().begin() + erase);
-        neighbour_solution[i].Jobs().insert(neighbour_solution[i].Jobs().begin() + insert, erase_element);
+
+        if (insert < neighbour_solution[i].Jobs().size())
+          neighbour_solution[i].Jobs().insert(neighbour_solution[i].Jobs().begin() + insert, erase_element);
+        else
+          neighbour_solution[i].Jobs().push_back(erase_element);
+    
         // Poco eficiente,. intentar refactorizar
         if (neighbour_solution < best_neighbour_solution) {
           best_neighbour_solution = neighbour_solution;
