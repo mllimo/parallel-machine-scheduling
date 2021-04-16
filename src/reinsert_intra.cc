@@ -14,14 +14,11 @@ void ReinsertIntra::operator()(std::vector<Machine>& solution) {
         neighbour_solution[i].Jobs().erase(neighbour_solution[i].Jobs().begin() + erase);
 
         if (insert < neighbour_solution[i].Jobs().size())
-          neighbour_solution[i].Jobs().insert(neighbour_solution[i].Jobs().begin() + insert, erase_element);
+          neighbour_solution[i].Insert(insert, erase_element);
         else
-          neighbour_solution[i].Jobs().push_back(erase_element);
-    
-        // Poco eficiente,. intentar refactorizar
-        if (neighbour_solution < best_neighbour_solution) {
-          best_neighbour_solution = neighbour_solution;
-        }
+          neighbour_solution[i].Insert(erase_element);
+
+        UpdateSolution(best_neighbour_solution, neighbour_solution);
         neighbour_solution = solution;
       }
     }

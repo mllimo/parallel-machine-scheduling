@@ -4,9 +4,12 @@
 #include <machine.h>
 
 class LocalSearch {
-public:
+ public:
   virtual ~LocalSearch();
   virtual void operator()(std::vector<Machine>& solution) = 0;
+
+ protected:
+  void UpdateSolution(std::vector<Machine>& best_solution, std::vector<Machine>& solution);
 };
 
 #endif

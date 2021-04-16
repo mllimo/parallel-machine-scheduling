@@ -13,15 +13,9 @@ void SwapEntra::operator()(std::vector<Machine>& solution) {
       for (size_t k = 0; k < neighbour_solution[i].Jobs().size(); ++k) {
         // index hijo
         for (size_t t = 0; t < neighbour_solution[j].Jobs().size(); ++t) {
-          std::swap(neighbour_solution[i].Jobs()[k],
-                    neighbour_solution[j].Jobs()[t]);
+          std::swap(neighbour_solution[i].Jobs()[k], neighbour_solution[j].Jobs()[t]);
         }
-        // Ver si mejor | Compararlos con todos lo vecinos | Con el primer en
-        // mejorar
-        if (neighbour_solution < best_neighbour_solution) {
-          best_neighbour_solution = neighbour_solution;
-        }
-        // reset
+        UpdateSolution(best_neighbour_solution, neighbour_solution);
         neighbour_solution = solution;
       }
     }

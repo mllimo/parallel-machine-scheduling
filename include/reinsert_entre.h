@@ -1,5 +1,5 @@
-#ifndef RESINSERT_ENTRE_H
-#define RESINSERT_ENTRE_H
+#ifndef REINSERT_ENTRE_H
+#define REINSERT_ENTRE_H
 
 #include <local_reinsert.h>
 

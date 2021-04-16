@@ -9,6 +9,7 @@
 #include <swap_entra.h>
 #include <swap_intra.h>
 #include <reinsert_intra.h>
+#include <reinsert_entre.h>
 
 class ProgramPms : public Program {
  public:
