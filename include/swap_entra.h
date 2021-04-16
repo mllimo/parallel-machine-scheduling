@@ -1,5 +1,5 @@
-#ifndef SWAP_INTRA_H
-#define SWAP_INTRA_H
+#ifndef SWAP_ENTRA_H
+#define SWAP_ENTRA_H
 
 #include <local_swap.h>
 
