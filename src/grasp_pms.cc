@@ -45,6 +45,7 @@ std::vector<Machine> GraspPms::Solve(size_t machines,
     solution.resize(machines, Machine(&jobs_times, &setup_times));
     ResetExecuted(jobs_times.size());
   }
+
   return best_solution;
 }
 
@@ -80,8 +81,8 @@ void GraspPms::Construct(std::vector<Machine>& machines,
 }
 
 void GraspPms::Local(std::vector<Machine>& solution) {
-  std::vector<Machine> best_solution = solution;
   if (local_search == NULL) return;
+  std::vector<Machine> best_solution = solution;
   do {
     (*local_search)(solution);
     if (solution < best_solution) {
