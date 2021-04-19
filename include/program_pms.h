@@ -10,6 +10,8 @@
 #include <reinsert_intra.h>
 #include <swap_entre.h>
 #include <swap_intra.h>
+#include <stop_no_improvement.h>
+#include <stop_max_iteration.h>
 
 class ProgramPms : public Program {
  public:

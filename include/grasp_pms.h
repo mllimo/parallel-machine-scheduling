@@ -3,21 +3,25 @@
 
 #include <greedy_pms.h>
 #include <local_search.h>
+#include <stop_condition.h>
 
 #include <random>
 
 class GraspPms : public GreedyPms {
  public:
+  std::vector<Machine> actual_solution;
+  std::vector<Machine> best_solution;
+
   GraspPms();
-  GraspPms(size_t lrc_size, size_t max_iteration_no_improvement, LocalSearch* local_search_ = NULL);
+  GraspPms(size_t lrc_size, StopCondition* stop_condition_, LocalSearch* local_search_ = NULL);
   virtual ~GraspPms();
 
   virtual std::vector<Machine> Solve(size_t machines, std::vector<std::vector<int>>& setup_times,
                                      std::vector<int>& jobs_times);
 
  protected:
-  bool is_first_run;
   LocalSearch* local_search;
+  class StopCondition* stop_condition;
   size_t lrc_size;
 
   /**
@@ -47,19 +51,6 @@ class GraspPms : public GreedyPms {
    * una mejor
    */
   void Local(std::vector<Machine>& solution);
-
-  /**
-   * @brief Dadas dos soluciones observa si la solución actual es mejor
-   * que la mejor actual. En ese caso la mejor pasa a ser la actual
-   * @param actual_solution
-   * @param best_solution
-   */
-  virtual void UpdateSolution(std::vector<Machine>& actual_solution,
-                              std::vector<Machine>& best_solution);
-
- private:
-  size_t max_iteration_no_improvement;
-  size_t iterations_no_improvement;
 };
 
 #endif

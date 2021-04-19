@@ -32,6 +32,8 @@ size_t Machine::TctWithJob(size_t job) const {
 
 size_t Machine::TCT() const {
   size_t tct = 0;
+  if (jobs_.size() == 0) return std::numeric_limits<size_t>::max();
+
   for (size_t i = 0; i < jobs_.size(); ++i) {
     if (i > 1)
       tct += (jobs_.size() - i) * (setup_times_->at(i + 1).at(i + 1) + jobs_times_->at(jobs_[i]));

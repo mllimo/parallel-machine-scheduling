@@ -1,50 +1,38 @@
 #include <grasp_pms.h>
 
-GraspPms::GraspPms() {
-  lrc_size = 2;
-  is_first_run = true;
-  this->max_iteration_no_improvement = 3;
-  iterations_no_improvement = 0;
-}
+GraspPms::GraspPms() { lrc_size = 2; }
 
-GraspPms::GraspPms(size_t lrc_size, size_t max_iteration_no_improvement,
-                   LocalSearch* local_search_) {
+GraspPms::GraspPms(size_t lrc_size, StopCondition* stop_condition_, LocalSearch* local_search_) {
   this->lrc_size = lrc_size;
-  is_first_run = true;
-  this->max_iteration_no_improvement = max_iteration_no_improvement;
-  this->local_search = local_search_;
-  iterations_no_improvement = 0;
+  local_search = local_search_;
+  stop_condition = stop_condition_;
 }
 
 GraspPms::~GraspPms() {
-  if (local_search != NULL)
-    delete local_search;
+  if (local_search != NULL) delete local_search;
+  if (stop_condition != NULL) delete stop_condition;
 }
 
-std::vector<Machine> GraspPms::Solve(size_t machines,
-                                     std::vector<std::vector<int>>& setup_times,
+std::vector<Machine> GraspPms::Solve(size_t machines, std::vector<std::vector<int>>& setup_times,
                                      std::vector<int>& jobs_times) {
   // Preprocesamiento
-  std::vector<Machine> solution(machines, Machine(&jobs_times, &setup_times));
-  std::vector<Machine> best_solution = solution;
+  actual_solution.resize(machines, Machine(&jobs_times, &setup_times));
+  best_solution = actual_solution;
+
   ResetExecuted(jobs_times.size());
 
-  for (auto& machine : solution) {
+  for (auto& machine : actual_solution) {
     machine.Insert(GetFirstJob(jobs_times, setup_times));
   }
 
-  // Buscar criterio de parada: Iteraciones sin mejora por ejemplo
-  while (iterations_no_improvement < max_iteration_no_improvement) {
-    // Fase construvtiva
-    Construct(solution, jobs_times);
-    // Busqueda Local
-    Local(solution);
-    // Actualizar la solucion
-    UpdateSolution(solution, best_solution);
+  do {
     // Reseteo
-    solution.resize(machines, Machine(&jobs_times, &setup_times));
     ResetExecuted(jobs_times.size());
-  }
+    // Fase construvtiva
+    Construct(actual_solution, jobs_times);
+    // Busqueda Local
+    Local(actual_solution);
+  } while ((*stop_condition)(this));  // Actualizar la solucion + comprobar condicion
 
   return best_solution;
 }
@@ -56,8 +44,7 @@ size_t GraspPms::SelectionRandom(std::vector<int>& rcl) {
   return rcl[distrib(gen)];
 }
 
-std::vector<int> GraspPms::MakeRcl(std::vector<int>& jobs_times,
-                                   Machine& machine) {
+std::vector<int> GraspPms::MakeRcl(std::vector<int>& jobs_times, Machine& machine) {
   std::vector<int> best_candidates;
   for (size_t i = 0; i < lrc_size && !IsAllVisited(); ++i) {
     best_candidates.push_back(Selection(jobs_times, machine));
@@ -65,8 +52,7 @@ std::vector<int> GraspPms::MakeRcl(std::vector<int>& jobs_times,
   return best_candidates;
 }
 
-void GraspPms::Construct(std::vector<Machine>& machines,
-                         std::vector<int>& jobs_times) {
+void GraspPms::Construct(std::vector<Machine>& machines, std::vector<int>& jobs_times) {
   std::vector<int> rcl;
   size_t candidate;
   while (!IsAllVisited()) {
@@ -82,22 +68,11 @@ void GraspPms::Construct(std::vector<Machine>& machines,
 
 void GraspPms::Local(std::vector<Machine>& solution) {
   if (local_search == NULL) return;
-  std::vector<Machine> best_solution = solution;
+  std::vector<Machine> best_local_solution = solution;
   do {
     (*local_search)(solution);
-    if (solution < best_solution) {
-      best_solution = solution;
+    if (solution < best_local_solution) {
+      best_local_solution = solution;
     }
-  } while (solution != best_solution);
-}
-
-void GraspPms::UpdateSolution(std::vector<Machine>& actual_solution,
-                              std::vector<Machine>& best_solution) {
-  if (actual_solution < best_solution || is_first_run) {
-    best_solution = actual_solution;
-    iterations_no_improvement = 0;
-    is_first_run = false;
-  } else {
-    ++iterations_no_improvement;
-  }
+  } while (solution != best_local_solution);
 }
