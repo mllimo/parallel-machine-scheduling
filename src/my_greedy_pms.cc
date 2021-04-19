@@ -30,10 +30,10 @@ size_t MyGreedyPms::GetFirstJob(std::vector<std::vector<int>>& setup_times,
   size_t index;
   float proportion;
   // Cuan mayor sea la proporcion mejor
-  float max_proportion = std::numeric_limits<float>::min();
+  float max_proportion = std::numeric_limits<float>::max();
   for (size_t i = 0; i < jobs_times.size(); ++i) {
     proportion = (float)jobs_times[i] / (float)setup_times[0][i + 1];
-    if (proportion > max_proportion && !is_executed[i]) {
+    if (proportion < max_proportion && !is_executed[i]) {
       max_proportion = proportion;
       index = i;
     }
@@ -47,12 +47,12 @@ size_t MyGreedyPms::Selection(std::vector<std::vector<int>>& setup_times,
                               std::vector<int>& jobs_times, Machine& machine) {
   size_t index;
   float proportion;
-  float max_proportion = std::numeric_limits<float>::min();
+  float max_proportion = std::numeric_limits<float>::max();
   for (size_t i = 0; i < jobs_times.size(); ++i) {
     if (is_executed[i] || machine.LastInserted() + 1 == i + 1) continue;
     proportion = (float)jobs_times[i] /
                  (float)setup_times[machine.LastInserted() + 1][i + 1];
-    if (proportion > max_proportion) {
+    if (proportion < max_proportion) {
       max_proportion = proportion;
       index = i;
     }

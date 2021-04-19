@@ -23,20 +23,7 @@ int ProgramPms::Run() {
   ProblemPms problem(arg_[1], algorithm);
   problem.Solve();
   std::cout << problem << std::endl;
-
-  /*
-  ProblemPms problem(arg_[1], new GreedyPms());
-  problem.Solve();
-  std::cout << problem << std::endl;
-
-  ProblemPms problem2(arg_[1], new MyGreedyPms());
-  problem2.Solve();
-  std::cout << problem2 << std::endl;
-
-  ProblemPms problem3(arg_[1], new GraspPms(3, new StopNoImprovement(10), new SwapIntra()));
-  problem3.Solve();
-  std::cout << problem3 << std::endl;
-  */
+  
   return 0;
 }
 
