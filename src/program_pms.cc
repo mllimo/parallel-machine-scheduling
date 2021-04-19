@@ -11,6 +11,7 @@ int ProgramPms::Run() {
   StrategyPms* algorithm;
   LocalSearch* local_seach;
   StopCondition* stop_condition;
+  Timer timer;
 
   if (arg_[2] == "GRASP") {
     local_seach = GetLocalSearch(arg_[4]);
@@ -21,9 +22,12 @@ int ProgramPms::Run() {
   }
 
   ProblemPms problem(arg_[1], algorithm);
+  timer.Play();
   problem.Solve();
+  timer.Stop();
   std::cout << problem << std::endl;
-  
+  std::cout << "Tiempo: " << timer.Get() << "s" <<  std::endl;
+
   return 0;
 }
 

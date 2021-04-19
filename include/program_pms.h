@@ -12,6 +12,7 @@
 #include <stop_no_improvement.h>
 #include <swap_entre.h>
 #include <swap_intra.h>
+#include <timer.h>
 
 #include <map>
 #include <functional>
