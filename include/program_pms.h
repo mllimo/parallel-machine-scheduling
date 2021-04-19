@@ -8,10 +8,13 @@
 #include <program.h>
 #include <reinsert_entre.h>
 #include <reinsert_intra.h>
+#include <stop_max_iteration.h>
+#include <stop_no_improvement.h>
 #include <swap_entre.h>
 #include <swap_intra.h>
-#include <stop_no_improvement.h>
-#include <stop_max_iteration.h>
+
+#include <map>
+#include <functional>
 
 class ProgramPms : public Program {
  public:
@@ -20,6 +23,11 @@ class ProgramPms : public Program {
 
   int Run();
   void ShowUsage() const;
+
+ private:
+  StrategyPms* GetStrategy(const std::string& algorithm);
+  LocalSearch* GetLocalSearch(const std::string& local_search);
+  StopCondition* GetStopCondition(const std::string& stop_condition, size_t iterations);
 };
 
 #endif
