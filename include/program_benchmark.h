@@ -1,5 +1,5 @@
-#ifndef PROGRAM_PMS_H
-#define PROGRAM_PMS_H
+#ifndef PROGRAM_BENCHMARK_H
+#define PROGRAM_BENCHMARK_H
 
 #include <grasp_pms.h>
 #include <greedy_pms.h>
@@ -13,30 +13,32 @@
 #include <swap_entre.h>
 #include <swap_intra.h>
 #include <timer.h>
-#include <program_benchmark.h>
 
-#include <functional>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
 
-class ProgramPms : public Program {
+class ProgramBenchmark : public Program {
  public:
   using Program::Program;
-  ~ProgramPms();
+  ~ProgramBenchmark();
 
   int Run();
   void ShowUsage() const;
 
  protected:
+  std::vector<std::string> header;
+  std::vector<std::vector<std::string>> data;
+
   StrategyPms* algorithm;
   LocalSearch* local_seach;
   StopCondition* stop_condition;
   Timer timer;
 
-  StrategyPms* GetStrategy(const std::string& algorithm);
   LocalSearch* GetLocalSearch(const std::string& local_search);
   StopCondition* GetStopCondition(const std::string& stop_condition, size_t iterations);
+
+  void Export();
 };
 
 #endif

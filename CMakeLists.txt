@@ -10,6 +10,7 @@ add_executable(${PROJECT_NAME} ${SRC})
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC "include"
+  PUBLIC "external/csv/include"
 )
 
 set(CMAKE_CXX_STANDARD 17)

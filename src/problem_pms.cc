@@ -18,6 +18,10 @@ void ProblemPms::Solve() {
     tct_ += machine.TCT();
 }
 
+size_t ProblemPms::Tct() const {
+  return tct_;
+}
+
 std::istream& operator>>(std::istream& is, ProblemPms& pms) {
   std::string aux;
   size_t jobs = 0;

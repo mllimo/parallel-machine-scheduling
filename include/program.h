@@ -8,6 +8,7 @@
 
 class Program {
  public:
+  Program(const std::vector<std::string>& argv);
   Program(int argc, char const *argv[]);
   virtual ~Program();
 

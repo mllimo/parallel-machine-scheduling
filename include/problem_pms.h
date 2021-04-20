@@ -29,6 +29,8 @@ class ProblemPms {
    */
   void Solve();
 
+  size_t Tct() const;
+
   friend std::istream& operator>>(std::istream& is, ProblemPms& pms);
   friend std::ostream& operator<<(std::ostream& os, ProblemPms& pms);
 

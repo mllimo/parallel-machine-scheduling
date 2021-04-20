@@ -17,6 +17,7 @@ std::vector<Machine> GreedyPms::Solve(
   while (!IsAllVisited()) {
     for (auto& machine : vector_machines) {
       candidate = Selection(jobs_times, machine);
+      if (candidate == std::numeric_limits<size_t>::max()) break;
       is_executed[candidate] = true;
       machine.Insert(candidate);
     }
@@ -43,7 +44,7 @@ size_t GreedyPms::GetFirstJob(
 
 size_t GreedyPms::Selection(std::vector<int>& jobs_times, Machine& machine) {
   size_t best_time = std::numeric_limits<size_t>::max();
-  size_t j, min_index;
+  size_t j, min_index = std::numeric_limits<size_t>::max();
   for (j = 0; j < jobs_times.size(); ++j) {
     if (is_executed[j]) continue;
     if (machine.TctWithJob(j) < best_time) {

@@ -1,5 +1,7 @@
 #include <program.h>
 
+Program::Program(const std::vector<std::string>& argv) { arg_ = argv; }
+
 Program::Program(int argc, char const *argv[]) { arg_ = ParseArgv(argc, argv); }
 
 Program::~Program() {}

@@ -3,15 +3,10 @@
 ProgramPms::~ProgramPms() {}
 
 int ProgramPms::Run() {
-  if (arg_.size() == 1 || arg_.size() == 2) {
+  if (arg_.size() <= 2) {
     ShowUsage();
     return 1;
   }
-
-  StrategyPms* algorithm;
-  LocalSearch* local_seach;
-  StopCondition* stop_condition;
-  Timer timer;
 
   if (arg_[2] == "GRASP") {
     local_seach = GetLocalSearch(arg_[4]);
@@ -26,7 +21,7 @@ int ProgramPms::Run() {
   problem.Solve();
   timer.Stop();
   std::cout << problem << std::endl;
-  std::cout << "Tiempo: " << timer.Get() << "s" <<  std::endl;
+  std::cout << "Tiempo: " << timer.Get() << "s" << std::endl;
 
   return 0;
 }
@@ -65,7 +60,7 @@ StopCondition* ProgramPms::GetStopCondition(const std::string& stop_condition, s
 }
 
 void ProgramPms::ShowUsage() const {
-  std::cout << "Forma de uso: ./pms <fichero-datos> <GREEDY|MY-GREEDY|GRASP> <argumentos>"
+  std::cout << "Forma de uso: ./pms <fichero-datos> <GREEDY|MY-GREEDY|GRASP> <grasp argumentos>"
             << std::endl;
   std::cout
       << "  - <fichero-datos>: Fichero que contiene los datos del problema\n"
@@ -75,5 +70,5 @@ void ProgramPms::ShowUsage() const {
       << "      - Tamaño RCL: número entero positivo\n"
       << "      - Busquedas locales: "
          "<intercambio-entre|intercambio-intra|reinsertar-entre|reinsertar-intra|ninguno>\n"
-      << "      - Condición de parada: <max-iteraciones|max-no-mejora> <número de iteraciones>\n";
+      << "      - Condición de parada: <max-iteraciones|max-no-mejora> <número de iteraciones>\n\n";
 }
