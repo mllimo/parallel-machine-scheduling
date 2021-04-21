@@ -30,7 +30,7 @@ class Machine {
    * @param i Indice
    * @param j Indice
    */
-  void SwapIndexex(size_t i, size_t j);
+  void SwapIndexes(size_t i, size_t j);
 
   /**
    * @brief Intenta encontrar el proceso dentro del conjunto de procesos de la

@@ -8,7 +8,7 @@ void SwapIntra::operator()(std::vector<Machine>& solution) {
   for (size_t i = 0; i < neighbour_solution.size(); ++i) {
     for (size_t j = 0; j < neighbour_solution[i].Jobs().size(); ++j) {
       for (size_t k = j + 1; k < neighbour_solution[i].Jobs().size(); ++k) {
-        std::swap(neighbour_solution[i].Jobs()[j], neighbour_solution[i].Jobs()[k]);
+        neighbour_solution[i].SwapIndexes(j, k);
         UpdateSolution(best_neighbour_solution, neighbour_solution);
         neighbour_solution = solution;
       }
