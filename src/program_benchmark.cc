@@ -9,11 +9,10 @@ int ProgramBenchmark::Run() {
   }
 
   size_t max_rcl, max_iterations;
-  if (arg_[3] == "GRASP") {
+  if (arg_[3] == "GRASP" && arg_.size() < 10) {
     header = {"RCL", "iteraciones", "tct", "tiempo / segundos"};
     max_rcl = (size_t)stoi(arg_[4]);
     max_iterations = (size_t)stoi(arg_[7]);
-
     for (size_t rcl = 2; rcl < max_rcl; ++rcl) {
       for (size_t iterations = 10; iterations <= max_iterations; iterations *= 10) {
         local_seach = GetLocalSearch(arg_[5]);
@@ -27,7 +26,10 @@ int ProgramBenchmark::Run() {
                         std::to_string(problem.Tct()), std::to_string(timer.Get())});
       }
     }
+  } else {
+    // Caso GVNS
   }
+
   Export();
   return 0;
 }
@@ -64,29 +66,4 @@ void ProgramBenchmark::ShowUsage() const {
             << "      - Condición de parada: <max-iteraciones|max-no-mejora> <número de "
                "iteraciones máximas> irá en potencias de 10 hasta el tamañado dado\n"
             << "      - GVNS: <GNVS> <tamaño-k>\n\n";
-}
-
-// Código redundante -> refactorizar
-LocalSearch* ProgramBenchmark::GetLocalSearch(const std::string& local_search) {
-  static std::map<std::string, std::function<LocalSearch*(void)>> local_map = {
-      {"intercambio-entre", []() -> LocalSearch* { return new SwapEntre(); }},
-      {"intercambio-intra", []() -> LocalSearch* { return new SwapIntra(); }},
-      {"reinsertar-entre", []() -> LocalSearch* { return new ReinsertEntre(); }},
-      {"reinsertar-intra", []() -> LocalSearch* { return new ReinsertIntra(); }},
-      {"ninguno", []() -> LocalSearch* { return NULL; }},
-  };
-  auto it = local_map.find(local_search);
-  if (it == local_map.end()) std::cerr << "Mala entrada para la busqueda local\n";
-  return it->second();
-}
-
-StopCondition* ProgramBenchmark::GetStopCondition(const std::string& stop_condition,
-                                                  size_t iterations) {
-  static std::map<std::string, std::function<StopCondition*(void)>> stop_map = {
-      {"max-iteraciones", [=]() -> StopCondition* { return new StopMaxIteration(iterations); }},
-      {"max-no-mejora", [=]() -> StopCondition* { return new StopNoImprovement(iterations); }},
-  };
-  auto it = stop_map.find(stop_condition);
-  if (it == stop_map.end()) std::cerr << "Mala entrada de condición de parada\n";
-  return it->second();
 }

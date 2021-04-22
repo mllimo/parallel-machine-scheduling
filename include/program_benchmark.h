@@ -6,7 +6,7 @@
 #include <gvns.h>
 #include <my_greedy_pms.h>
 #include <problem_pms.h>
-#include <program.h>
+#include <program_pms.h>
 #include <reinsert_entre.h>
 #include <reinsert_intra.h>
 #include <stop_max_iteration.h>
@@ -20,9 +20,9 @@
 #include <string>
 #include <vector>
 
-class ProgramBenchmark : public Program {
+class ProgramBenchmark : public ProgramPms {
  public:
-  using Program::Program;
+  using ProgramPms::ProgramPms;
   ~ProgramBenchmark();
 
   int Run();
@@ -31,18 +31,6 @@ class ProgramBenchmark : public Program {
  protected:
   std::vector<std::string> header;
   std::vector<std::vector<std::string>> data;
-
-  StrategyPms* algorithm;
-  LocalSearch* local_seach;
-  StopCondition* stop_condition;
-  Gvns* gvns;
-  Vnd* vnd;
-  std::vector<LocalSearch*> local_searches;
-  Timer timer;
-
-  void InitLocalSearches();
-  LocalSearch* GetLocalSearch(const std::string& local_search);
-  StopCondition* GetStopCondition(const std::string& stop_condition, size_t iterations);
 
   void Export();
 };

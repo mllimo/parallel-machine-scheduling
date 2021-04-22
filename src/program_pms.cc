@@ -33,6 +33,7 @@ int ProgramPms::Run() {
 }
 
 void ProgramPms::InitLocalSearches() {
+  local_searches.clear();
   local_searches.push_back(new SwapEntre());
   local_searches.push_back(new ReinsertEntre());
   local_searches.push_back(new SwapIntra());

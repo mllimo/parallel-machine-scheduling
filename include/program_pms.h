@@ -24,10 +24,10 @@
 class ProgramPms : public Program {
  public:
   using Program::Program;
-  ~ProgramPms();
+  virtual ~ProgramPms();
 
-  int Run();
-  void ShowUsage() const;
+  virtual int Run();
+  virtual void ShowUsage() const;
 
  protected:
   StrategyPms* algorithm;
