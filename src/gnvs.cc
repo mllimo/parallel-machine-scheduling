@@ -2,7 +2,7 @@
 
 Gnvs::Gnvs(size_t k, LocalSearch* local, Vnd* vnd_) : Vns(k), local_search(local), vnd(vnd_) {}
 
-Gnvs::~Gnvs() {}
+Gnvs::~Gnvs() { delete vnd; }
 
 void Gnvs::operator()(std::vector<Machine>& solution) {
   std::vector<Machine> partial_solution = solution;
@@ -24,5 +24,5 @@ void Gnvs::operator()(std::vector<Machine>& solution) {
 }
 
 void Gnvs::Shake(size_t k, std::vector<Machine>& partial_solution) {
-  // Se vienen problemas de implementacion
+  (*local_search)(partial_solution, k);
 }

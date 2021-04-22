@@ -2,7 +2,10 @@
 
 Vnd::Vnd(const std::vector<LocalSearch*>& local) : local_searches(local) {}
 
-Vnd::~Vnd() {}
+Vnd::~Vnd() {
+  for (auto& local : local_searches)
+    delete local;
+}
 
 void Vnd::operator()(std::vector<Machine>& solution) {
   size_t index = 0;

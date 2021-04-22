@@ -4,7 +4,7 @@
 #include <greedy_pms.h>
 #include <local_search.h>
 #include <stop_condition.h>
-
+#include <vns.h>
 #include <random>
 
 class GraspPms : public GreedyPms {
@@ -13,13 +13,14 @@ class GraspPms : public GreedyPms {
   std::vector<Machine> best_solution;
 
   GraspPms();
-  GraspPms(size_t lrc_size, StopCondition* stop_condition_, LocalSearch* local_search_ = NULL);
+  GraspPms(size_t lrc_size, StopCondition* stop_condition_, LocalSearch* local_search_ = NULL, Vns* vns_ = NULL);
   virtual ~GraspPms();
 
   virtual std::vector<Machine> Solve(size_t machines, std::vector<std::vector<int>>& setup_times,
                                      std::vector<int>& jobs_times);
 
  protected:
+  Vns* vns;
   LocalSearch* local_search;
   class StopCondition* stop_condition;
   size_t lrc_size;
@@ -51,6 +52,8 @@ class GraspPms : public GreedyPms {
    * una mejor
    */
   void Local(std::vector<Machine>& solution);
+
+  void Upgrade();
 };
 
 #endif

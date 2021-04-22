@@ -9,9 +9,15 @@ int ProgramPms::Run() {
   }
 
   if (arg_[2] == "GRASP") {
+    gnvs = NULL;
     local_seach = GetLocalSearch(arg_[4]);
     stop_condition = GetStopCondition(arg_[5], (size_t)stoi(arg_[6]));
-    algorithm = new GraspPms((size_t)stoi(arg_[3]), stop_condition, local_seach);
+    if (arg_.size() == 9) {
+      InitLocalSearches();
+      vnd = new Vnd(local_searches);
+      gnvs = new Gnvs(stoi(arg_[8]), local_seach, vnd);
+    }
+    algorithm = new GraspPms((size_t)stoi(arg_[3]), stop_condition, local_seach, gnvs);
   } else {
     algorithm = GetStrategy(arg_[2]);
   }
@@ -24,6 +30,13 @@ int ProgramPms::Run() {
   std::cout << "Tiempo: " << timer.Get() << "s" << std::endl;
 
   return 0;
+}
+
+void ProgramPms::InitLocalSearches() {
+  local_searches.push_back(new SwapEntre());
+  local_searches.push_back(new ReinsertEntre());
+  local_searches.push_back(new SwapIntra());
+  local_searches.push_back(new ReinsertIntra());
 }
 
 StrategyPms* ProgramPms::GetStrategy(const std::string& algorithm) {
@@ -70,5 +83,6 @@ void ProgramPms::ShowUsage() const {
       << "      - Tamaño RCL: número entero positivo\n"
       << "      - Busquedas locales: "
          "<intercambio-entre|intercambio-intra|reinsertar-entre|reinsertar-intra|ninguno>\n"
-      << "      - Condición de parada: <max-iteraciones|max-no-mejora> <número de iteraciones>\n\n";
+      << "      - Condición de parada: <max-iteraciones|max-no-mejora> <número de iteraciones>\n"
+      << "      - GVNS: <GNVS> <tamaño-k>\n\n";
 }

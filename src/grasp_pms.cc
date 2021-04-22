@@ -2,15 +2,18 @@
 
 GraspPms::GraspPms() { lrc_size = 2; }
 
-GraspPms::GraspPms(size_t lrc_size, StopCondition* stop_condition_, LocalSearch* local_search_) {
+GraspPms::GraspPms(size_t lrc_size, StopCondition* stop_condition_, LocalSearch* local_search_,
+                   Vns* vns_) {
   this->lrc_size = lrc_size;
   local_search = local_search_;
+  vns = vns_;
   stop_condition = stop_condition_;
 }
 
 GraspPms::~GraspPms() {
   if (local_search != NULL) delete local_search;
   if (stop_condition != NULL) delete stop_condition;
+  if (vns != NULL) delete vns;
 }
 
 std::vector<Machine> GraspPms::Solve(size_t machines, std::vector<std::vector<int>>& setup_times,
@@ -32,9 +35,15 @@ std::vector<Machine> GraspPms::Solve(size_t machines, std::vector<std::vector<in
     Construct(actual_solution, jobs_times);
     // Busqueda Local
     Local(actual_solution);
+    // GVNS
+    Upgrade();
   } while ((*stop_condition)(this));  // Actualizar la solucion + comprobar condicion
 
   return best_solution;
+}
+void GraspPms::Upgrade() {
+  if (vns != NULL)
+    (*vns)(actual_solution);
 }
 
 size_t GraspPms::SelectionRandom(std::vector<int>& rcl) {
