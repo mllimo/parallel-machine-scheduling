@@ -3,6 +3,7 @@
 
 #include <grasp_pms.h>
 #include <greedy_pms.h>
+#include <gvns.h>
 #include <my_greedy_pms.h>
 #include <problem_pms.h>
 #include <program.h>
@@ -13,6 +14,7 @@
 #include <swap_entre.h>
 #include <swap_intra.h>
 #include <timer.h>
+#include <vnd.h>
 
 #include <map>
 #include <string>
@@ -33,8 +35,12 @@ class ProgramBenchmark : public Program {
   StrategyPms* algorithm;
   LocalSearch* local_seach;
   StopCondition* stop_condition;
+  Gvns* gvns;
+  Vnd* vnd;
+  std::vector<LocalSearch*> local_searches;
   Timer timer;
 
+  void InitLocalSearches();
   LocalSearch* GetLocalSearch(const std::string& local_search);
   StopCondition* GetStopCondition(const std::string& stop_condition, size_t iterations);
 

@@ -62,7 +62,8 @@ void ProgramBenchmark::ShowUsage() const {
             << "      - Busquedas locales: "
                "<intercambio-entre|intercambio-intra|reinsertar-entre|reinsertar-intra|ninguno>\n"
             << "      - Condición de parada: <max-iteraciones|max-no-mejora> <número de "
-               "iteraciones máximas> irá en potencias de 10 hasta el tamañado dado\n";
+               "iteraciones máximas> irá en potencias de 10 hasta el tamañado dado\n"
+            << "      - GVNS: <GNVS> <tamaño-k>\n\n";
 }
 
 // Código redundante -> refactorizar
