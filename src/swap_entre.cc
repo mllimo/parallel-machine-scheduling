@@ -20,3 +20,20 @@ void SwapEntre::operator()(std::vector<Machine>& solution) {
     }
   }
 }
+
+void SwapEntre::operator()(std::vector<Machine>& solution, size_t k) {
+  size_t steps = 0;
+  for (size_t i = 0; i < solution.size(); ++i) {
+    for (size_t j = i + 1; j < solution.size(); ++j) {
+      for (size_t k = 0; k < solution[i].Jobs().size(); ++k) {
+        for (size_t t = 0; t < solution[j].Jobs().size(); ++t) {
+          steps += 1;
+          if (steps == k) {
+            std::swap(solution[i].Jobs()[k], solution[j].Jobs()[t]);
+            return;
+          }
+        }
+      }
+    }
+  }
+}

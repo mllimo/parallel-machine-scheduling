@@ -7,6 +7,7 @@ class ReinsertEntre : public LocalReinsert {
  public:
   ~ReinsertEntre();
   void operator()(std::vector<Machine>& solution);
+  void operator()(std::vector<Machine>& solution, size_t k);
 };
 
 #endif

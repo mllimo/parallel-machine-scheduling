@@ -14,3 +14,18 @@ void SwapIntra::operator()(std::vector<Machine>& solution) {
     }
   }
 }
+
+void SwapIntra::operator()(std::vector<Machine>& solution, size_t k) {
+  size_t steps = 0;
+  for (size_t i = 0; i < solution.size(); ++i) {
+    for (size_t j = 0; j < solution[i].Jobs().size(); ++j) {
+      for (size_t k = j + 1; k < solution[i].Jobs().size(); ++k) {
+        steps += 1;
+        if (steps == k) {
+          solution[i].SwapIndexes(j, k);
+          return;
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ class SwapIntra : public LocalSwap {
   public:
   ~SwapIntra();
   void operator()(std::vector<Machine>& solution);
+  void operator()(std::vector<Machine>& solution, size_t k);
 };
 
 

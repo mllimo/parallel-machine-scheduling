@@ -23,3 +23,26 @@ void ReinsertIntra::operator()(std::vector<Machine>& solution) {
     }
   }
 }
+
+void ReinsertIntra::operator()(std::vector<Machine>& solution, size_t k) {
+  size_t erase_element;
+  size_t steps = 0;
+  // maquinas
+  for (size_t i = 0; i < solution.size(); ++i) {
+    for (size_t erase = 0; erase < solution[i].Jobs().size() - 1; ++erase) {
+      for (size_t insert = erase + 1; insert <= solution[i].Jobs().size(); ++insert) {
+        steps += 1;
+        if (steps == k) {
+          erase_element = solution[i].Jobs()[erase];
+          solution[i].Jobs().erase(solution[i].Jobs().begin() + erase);
+
+          if (insert < solution[i].Jobs().size())
+            solution[i].Insert(insert, erase_element);
+          else
+            solution[i].Insert(erase_element);
+          return;
+        }
+      }
+    }
+  }
+}
