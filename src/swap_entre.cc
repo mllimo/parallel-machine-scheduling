@@ -14,9 +14,9 @@ void SwapEntre::operator()(std::vector<Machine>& solution) {
         // index hijo
         for (size_t t = 0; t < neighbour_solution[j].Jobs().size(); ++t) {
           std::swap(neighbour_solution[i].Jobs()[k], neighbour_solution[j].Jobs()[t]);
+          UpdateSolution(best_neighbour_solution, neighbour_solution);
+          std::swap(neighbour_solution[i].Jobs()[k], neighbour_solution[j].Jobs()[t]);
         }
-        UpdateSolution(best_neighbour_solution, neighbour_solution);
-        neighbour_solution = solution;
       }
     }
   }

@@ -10,7 +10,7 @@ void SwapIntra::operator()(std::vector<Machine>& solution) {
       for (size_t k = j + 1; k < neighbour_solution[i].Jobs().size(); ++k) {
         neighbour_solution[i].SwapIndexes(j, k);
         UpdateSolution(best_neighbour_solution, neighbour_solution);
-        neighbour_solution = solution;
+        neighbour_solution[i].SwapIndexes(j, k);
       }
     }
   }
