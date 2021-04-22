@@ -3,7 +3,6 @@
 ReinsertIntra::~ReinsertIntra() {}
 
 void ReinsertIntra::operator()(std::vector<Machine>& solution) {
-  auto best_neighbour_solution = solution;
   auto neighbour_solution = solution;
   size_t erase_element;
   // maquinas
@@ -18,10 +17,9 @@ void ReinsertIntra::operator()(std::vector<Machine>& solution) {
         else
           neighbour_solution[i].Insert(erase_element);
 
-        UpdateSolution(best_neighbour_solution, neighbour_solution);
+        UpdateSolution(solution, neighbour_solution);
         neighbour_solution = solution;
       }
     }
   }
-  solution = best_neighbour_solution;
 }
