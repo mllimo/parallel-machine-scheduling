@@ -13,7 +13,7 @@
 #include <swap_entre.h>
 #include <swap_intra.h>
 #include <timer.h>
-#include <gnvs.h>
+#include <gvns.h>
 #include <vnd.h>
 
 #include <functional>
@@ -33,7 +33,7 @@ class ProgramPms : public Program {
   StrategyPms* algorithm;
   LocalSearch* local_seach;
   StopCondition* stop_condition;
-  Gnvs* gnvs;
+  Gvns* gvns;
   Vnd* vnd;
   std::vector<LocalSearch*> local_searches;
   Timer timer;  

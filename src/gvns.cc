@@ -1,10 +1,10 @@
-#include <gnvs.h>
+#include <gvns.h>
 
-Gnvs::Gnvs(size_t k, LocalSearch* local, Vnd* vnd_) : Vns(k), local_search(local), vnd(vnd_) {}
+Gvns::Gvns(size_t k, LocalSearch* local, Vnd* vnd_) : Vns(k), local_search(local), vnd(vnd_) {}
 
-Gnvs::~Gnvs() { delete vnd; }
+Gvns::~Gvns() { delete vnd; }
 
-void Gnvs::operator()(std::vector<Machine>& solution) {
+void Gvns::operator()(std::vector<Machine>& solution) {
   std::vector<Machine> partial_solution = solution;
   size_t k;
   do {
@@ -23,6 +23,6 @@ void Gnvs::operator()(std::vector<Machine>& solution) {
   } while (partial_solution != solution);
 }
 
-void Gnvs::Shake(size_t k, std::vector<Machine>& partial_solution) {
+void Gvns::Shake(size_t k, std::vector<Machine>& partial_solution) {
   (*local_search)(partial_solution, k);
 }

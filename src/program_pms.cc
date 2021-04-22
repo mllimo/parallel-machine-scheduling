@@ -9,15 +9,15 @@ int ProgramPms::Run() {
   }
 
   if (arg_[2] == "GRASP") {
-    gnvs = NULL;
+    gvns = NULL;
     local_seach = GetLocalSearch(arg_[4]);
     stop_condition = GetStopCondition(arg_[5], (size_t)stoi(arg_[6]));
     if (arg_.size() == 9) {
       InitLocalSearches();
       vnd = new Vnd(local_searches);
-      gnvs = new Gnvs(stoi(arg_[8]), local_seach, vnd);
+      gvns = new Gvns(stoi(arg_[8]), local_seach, vnd);
     }
-    algorithm = new GraspPms((size_t)stoi(arg_[3]), stop_condition, local_seach, gnvs);
+    algorithm = new GraspPms((size_t)stoi(arg_[3]), stop_condition, local_seach, gvns);
   } else {
     algorithm = GetStrategy(arg_[2]);
   }

@@ -1,13 +1,13 @@
-#ifndef GNVS_H
-#define GNVS_H
+#ifndef GVNS_H
+#define GVNS_H
 
 #include <vns.h>
 #include <vnd.h>
 
-class Gnvs : public Vns {
+class Gvns : public Vns {
  public:
-  Gnvs(size_t k, LocalSearch* local, Vnd* vnd_);
-  ~Gnvs();
+  Gvns(size_t k, LocalSearch* local, Vnd* vnd_);
+  ~Gvns();
 
   void operator()(std::vector<Machine>& solution);
 
