@@ -28,6 +28,27 @@ int ProgramBenchmark::Run() {
     }
   } else {
     // Caso GVNS
+    header = {"k", "iteraciones", "tct", "tiempo / segundos"};
+    max_rcl = (size_t)stoi(arg_[4]);
+    size_t max_k = (size_t)stoi(arg_[9]);
+    max_iterations = (size_t)stoi(arg_[7]);
+    for (size_t k = 2; k < max_k; ++k) {
+      for (size_t iterations = 10; iterations <= max_iterations; iterations *= 10) {
+        local_seach = GetLocalSearch(arg_[5]);
+        stop_condition = GetStopCondition(arg_[6], iterations);
+        InitLocalSearches();
+        vnd = new Vnd(local_searches);
+        gvns = new Gvns(k, local_seach, vnd);
+        algorithm = new GraspPms(max_rcl, stop_condition, local_seach, gvns);
+  
+        ProblemPms problem(arg_[2], algorithm);
+        timer.Play();
+        problem.Solve();
+        timer.Stop();
+        data.push_back({std::to_string(k), std::to_string(iterations),
+                        std::to_string(problem.Tct()), std::to_string(timer.Get())});
+      }
+    }
   }
 
   Export();
